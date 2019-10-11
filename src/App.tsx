@@ -21,11 +21,13 @@ const App: React.FC = () => {
   }
 */
 function handleLogin() {
+  /*
   if (process.env.NODE_ENV === "production" ) {
     window.location.href = "http://mendo-server.herokuapp.com/login"
   } else { 
     window.location.href = "http://localhost:8888/login"
-  }
+  }*/
+  window.location.href = "http://mendo-server.herokuapp.com/login"
 }
 
   return (
