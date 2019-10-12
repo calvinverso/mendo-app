@@ -19,7 +19,9 @@
     "noEmit": true,
     "jsx": "react",
     "noImplicitAny": false, 
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+
   },
   "include": [
     "src"
