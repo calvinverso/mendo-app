@@ -23,7 +23,7 @@ class App extends React.Component<Props, State> {
     access_token: ''
   };
   componentDidMount() {
-    this.getInfo();
+   // this.getInfo();
     //console.log(this.state.userData)
   }
 
@@ -58,6 +58,7 @@ class App extends React.Component<Props, State> {
   }
 
   handleLogin() {
+    console.log(process.env.NODE_ENV)
     if (process.env.NODE_ENV === "development") {
       window.location.href = "http://localhost:8888/login"
     } else {
