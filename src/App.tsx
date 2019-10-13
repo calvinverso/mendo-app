@@ -58,7 +58,7 @@ class App extends React.Component<Props, State> {
   }
 
   handleLogin() {
-    if (process.env.NODE_ENV) {
+    if (process.env.NODE_ENV !== "production") {
       window.location.href = "http://localhost:8888/login"
     } else {
       window.location.href = "http://mendo-server.herokuapp.com/login"
