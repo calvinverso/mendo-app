@@ -20,7 +20,7 @@
     "jsx": "react",
     "noImplicitAny": false, 
     "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": true,
+    "suppressImplicitAnyIndexErrors": true
 
   },
   "include": [
