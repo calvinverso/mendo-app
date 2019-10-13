@@ -30,7 +30,7 @@ class App extends React.Component<Props, State> {
   getInfo() {
     let access_token = queryString.parse(window.location.search).access_token;
     console.log(access_token);
-    if (access_token) {
+    if (access_token !== undefined) {
       this.setState({ access_token: access_token.toString() })
       fetch("https://api.spotify.com/v1/me", {
         headers: {
@@ -42,14 +42,17 @@ class App extends React.Component<Props, State> {
       })
 
 
-      fetch("https://api.spotify.com/v1/me/top/tracks/", {
+      fetch("https://api.spotify.com/v1/me/top/tracks?" +
+        queryString.stringify({
+          time_range: "long_term"
+        }), {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
           'Authorization': "Bearer " + access_token
         }
-      }).then((res) => console.log(res)).then(data=>console.log(data));
-      
+      }).then((res) => res.json()).then(data => console.log(data));
+
     }
 
   }
