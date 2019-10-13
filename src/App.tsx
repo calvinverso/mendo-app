@@ -58,12 +58,8 @@ class App extends React.Component<Props, State> {
   }
 
   handleLogin() {
-    console.log(process.env.NODE_ENV)
-    if (process.env.NODE_ENV === "development") {
-      window.location.href = "http://localhost:8888/login"
-    } else {
-      window.location.href = "http://mendo-server.herokuapp.com/login"
-    }
+    console.log(process.env.REACT_APP_ENDPOINT)
+    window.location.href = process.env.REACT_APP_ENDPOINT + "/login";
   }
 
   render() {
