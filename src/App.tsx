@@ -1,10 +1,20 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import queryString from 'query-string';
+import ScrollAnimation from 'react-animate-on-scroll';
+
 //import axios from 'axios';
 //import { Link, BrowserRouter } from 'react-router-dom'
 
+
+/*LOGOS*/
+import mendo_pink from './images/mendo.svg'
+
+
+/*GRAPHICS*/
+import fireplace from './images/fireplace.png'
+import couch from './images/couch.png';
 
 interface Props { }
 
@@ -23,7 +33,7 @@ class App extends React.Component<Props, State> {
     access_token: ''
   };
   componentDidMount() {
-   // this.getInfo();
+    // this.getInfo();
     //console.log(this.state.userData)
   }
 
@@ -66,22 +76,43 @@ class App extends React.Component<Props, State> {
     return (
       <div className="App" >
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            hey, user
-        </p>
-          {this.state.userData ? <p>Hey que tal, {this.state.userData.display_name}</p> : <button type="button" className="btn btn-info" onClick={this.handleLogin}>Login</button>}
+          <img src={mendo_pink} className="mendo-logo" alt="logo" />
+          <div className="landing section">
+            <div className="intro">
+              <ScrollAnimation animateIn="fadeInUp">
+                <h1>
+                  Discover new music based on your Spotify activity
+                </h1>
+              </ScrollAnimation>
+              <ScrollAnimation animateIn="fadeInUp">
+                <button onClick={this.handleLogin}>Start</button>
+              </ScrollAnimation>
+            </div>
+            <img src={fireplace} className="animated fadeInRight main-graphic" alt="logo" />
+          </div>
+          {
+            this.state.userData
+              ?
+              <p>Hey que tal, {this.state.userData.display_name}</p>
+              :
+              ''
+          }
 
-
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-        </a>
         </header>
+        <div className="section" id="creation">
+          <div className="intro">
+            <ScrollAnimation animateIn="fadeInUp">
+              <h1>
+                Create playlists based on your mood and energy
+                </h1>
+            </ScrollAnimation>
+            <ScrollAnimation animateIn="fadeInUp">
+
+              <button onClick={this.handleLogin}>Let's Go!</button>
+            </ScrollAnimation>
+          </div>
+          <img src={couch} className="animated fadeInLeft second-graphic" alt="logo" />
+        </div>
       </div>
     );
   }

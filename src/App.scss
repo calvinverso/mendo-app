@@ -1,0 +1,189 @@
+@import url("https://rsms.me/inter/inter.css");
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,700&display=swap");
+
+$colors: (
+  blue: #1252c9,
+  pink: #ffabca,
+  red: #e33065,
+  dark-blue: #122a4d,
+  light-blue: #30c8f2
+);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $class == sm {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $class == md {
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $class == lg {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg";
+  }
+}
+
+.App {
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  @include breakpoint(sm) {
+    font-size: 13px;
+  }
+  @include breakpoint(md) {
+    font-size: 13.5px;
+  }
+  font-size: calc(10px + 2vmin);
+}
+
+.mendo-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40vmin;
+  padding: 1em;
+}
+.App-header {
+  background-color: color(blue);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+h1 {
+  font-weight: 700;
+  font-size: 1.5em;
+  @include breakpoint(sm) {
+    font-size: 2em;
+  }
+}
+.section {
+  display: grid;
+  grid-template-rows: 50% 50%;
+  height: 100vh;
+  justify-items: center;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1em;
+  h1 {
+    text-align: center;
+    @include breakpoint(sm) {
+      text-align: left;
+    }
+  }
+  button {
+    background-color: color(pink);
+    border-radius: 2em;
+    border: none;
+
+    text-transform: uppercase;
+    letter-spacing: 0.175em;
+    font-weight: 600;
+    font-size: 0.8em;
+    font-family: Inter;
+    margin: 1em 0;
+
+    width: 12em;
+    height: 3em;
+  }
+
+  @include breakpoint(sm) {
+    align-items: flex-start;
+    padding: 6em;
+    margin-top: 4em;
+  }
+}
+
+.landing {
+  color: color(pink);
+
+  h1 {
+    margin-top: 2em;
+    text-align: center;
+    @include breakpoint(sm) {
+      text-align: left;
+    }
+  }
+  button {
+    color: color(blue);
+    background-color: color(pink);
+  }
+  .intro {
+    @include breakpoint(sm) {
+      align-items: flex-start;
+    }
+  }
+}
+
+.main-graphic {
+  height: 50vh;
+  width: 100%;
+  object-fit: cover;
+
+  @include breakpoint(md) {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 32vmax;
+    display: block;
+    width: initial;
+  }
+}
+
+#creation {
+  color: color(red);
+  position: relative;
+  min-height: 100vh;
+
+  h1 {
+    text-align: center;
+    @include breakpoint(md) {
+      text-align: right;
+    }
+  }
+  button {
+    color: white;
+    background-color: color(red);
+  }
+  .second-graphic {
+    height: 50vh;
+    width: 100%;
+    object-fit: cover;
+
+    @include breakpoint(md) {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 32vmax;
+      display: block;
+      width: initial;
+    }
+  }
+
+  .intro {
+    @include breakpoint(sm) {
+      align-items: flex-end;
+    }
+  }
+}
