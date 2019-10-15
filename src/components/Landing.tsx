@@ -1,17 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './Landing.scss';
-import queryString from 'query-string';
+//import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
-
-//import axios from 'axios';
-//import { Link, BrowserRouter } from 'react-router-dom'
-
 
 /*LOGOS*/
 import mendo_pink from '../images/mendo.svg'
 import mendo_red from '../images/mendo-red.svg'
-
 
 /*GRAPHICS*/
 import fireplace from '../images/fireplace.png'

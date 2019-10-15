@@ -1,25 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import queryString from 'query-string';
-import ScrollAnimation from 'react-animate-on-scroll';
-
-//import axios from 'axios';
-//import { Link, BrowserRouter } from 'react-router-dom'
-
-
-/*LOGOS*/
-import mendo_pink from './images/mendo.svg'
-import mendo_red from './images/mendo-red.svg'
-
-
-/*GRAPHICS*/
-import fireplace from './images/fireplace.png'
-import couch from './images/couch.png';
 
 
 /*COMPONENTS*/
 import Landing from './components/Landing';
+import Home from './components/Home';
 
 interface Props { }
 
@@ -38,7 +24,7 @@ class App extends React.Component<Props, State> {
     access_token: ''
   };
   componentDidMount() {
-    // this.getInfo();
+    this.getInfo();
     //console.log(this.state.userData)
   }
 
@@ -72,15 +58,12 @@ class App extends React.Component<Props, State> {
 
   }
 
-  handleLogin() {
-    console.log(process.env.REACT_APP_ENDPOINT)
-    window.location.href = process.env.REACT_APP_ENDPOINT + "/login";
-  }
-
   render() {
     return (
       <div className="App" >
-        <Landing />
+
+        {this.state.userData ? <Home access_token={this.state.access_token}/> : <Landing />}
+
       </div>
     );
   }

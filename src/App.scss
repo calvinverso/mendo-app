@@ -45,7 +45,7 @@ $colors: (
   @include breakpoint(md) {
     font-size: 13.5px;
   }
-  font-size: calc(10px + 2vmin);
+ // font-size: calc(10px + 2vmin);
 }
 
 .mendo-logo {
