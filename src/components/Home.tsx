@@ -42,21 +42,41 @@ class Home extends React.Component<Props, State> {
 
     }
     async getPlayHistory() {
+
+        /*
         await fetch(process.env.REACT_APP_ENDPOINT + "/playhistory?access_token" + this.props.access_token).then((res) => {
             console.log(res)
             res.json().then((result) => { this.setState({ playHistory: result.tracks }) })
         })
+        */
 
+        SpotifyAPI.getMyRecentlyPlayedTracks({ limit: 15 }).then((response: any) => {
+            console.log("YOUR PLAY HISTORY")
+            var tracks: [{ name: string, artist: string, uri: string, played_at: string }]
+                = [{ name: '', artist: '', uri: '', played_at: '' }];
+            var track;
+            response.items.map((item) => {
 
+                track = {
+                    name: item.track.name,
+                    artist: item.track.artists[0].name,
+                    uri: item.track.uri,
+                    played_at: item.track.played_at
+                }
+                tracks.push(track);
+            })
+            this.setState({ playHistory: tracks })
+
+        })
     }
     getTopTracks() {
         SpotifyAPI.getMyTopTracks({ limit: 5, time_range: this.state.tracksTimeRange }).then((response: any) => {
-            console.log("your top tracks")
+           // console.log("your top tracks")
             //console.log(response);
             var topTracks: [{ name: string, artist: string, image: string }] = [{ name: '', artist: '', image: '' }]
             var track;
             response.items.map((item) => {
-                console.log(item.name)
+                //console.log(item.name)
                 track = {
                     name: item.name,
                     artist: item.artists[0].name,
@@ -64,14 +84,14 @@ class Home extends React.Component<Props, State> {
                 }
                 topTracks.push(track);
             })
-            console.log(topTracks)
+           // console.log(topTracks)
             this.setState({ topTracks: topTracks })
         })
     }
 
     getTopArtists() {
         SpotifyAPI.getMyTopArtists({ limit: 5, time_range: this.state.tracksTimeRange }).then((response: any) => {
-            console.log("your top artists")
+            //console.log("your top artists")
             var topArtists: [{ name: string, genres: [], image: string }] = [{ name: '', genres: [], image: '' }]
             var artist;
 
@@ -80,10 +100,10 @@ class Home extends React.Component<Props, State> {
 
             response.items.map((item) => {
                 var main_genres = [];
-                console.log(item.name)
+               // console.log(item.name)
                 item.genres.map((genre, i) => {
                     if (i < 2) {
-                        console.log("GENRE: " + genre)
+                        //console.log("GENRE: " + genre)
                         main_genres.push(genre);
                     }
                 })
@@ -94,7 +114,7 @@ class Home extends React.Component<Props, State> {
                 }
                 topArtists.push(artist);
             })
-            console.log(topArtists)
+            //console.log(topArtists)
 
             this.setState({ topArtists: topArtists })
 

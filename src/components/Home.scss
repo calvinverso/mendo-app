@@ -105,8 +105,14 @@
   grid-area: playlists;
   display: grid;
   grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
   padding: 0;
   font-size: 1.2em;
+
+  @include breakpoint(md) {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+  }
 
   .play {
     height: 100%;
@@ -122,7 +128,7 @@
     //transform: scale(1.2)
   }
   > div {
-    width: 200%;
+    width: 100%;
 
     height: 100%;
     display: flex;
