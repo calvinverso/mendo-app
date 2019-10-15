@@ -175,8 +175,8 @@ class Home extends React.Component<Props, State> {
                     <div className="playlists">
                         <div>
                             <h1>Let's create something awesome</h1>
-                            <p>Create a custom playlist</p>
-                            <button className="main-bt">Get Started</button>
+                            <p>Currently in development</p>
+                            <button className="main-bt">Coming Soon</button>
                         </div>
 
                         <img src={vr} className="play"></img>
