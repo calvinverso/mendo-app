@@ -38,7 +38,7 @@ $colors: (
 .App {
   text-align: center;
   font-family: Inter, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   @include breakpoint(sm) {
     font-size: 13px;
   }

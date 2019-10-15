@@ -46,8 +46,9 @@
     margin-top: 0;
     font-weight: 800;
     font-size: 3em;
+    margin-bottom: 0;
     @include breakpoint(md) {
-        font-size: 2.2em;
+      font-size: 2.2em;
     }
   }
 
@@ -58,6 +59,18 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-top: 0;
+    font-weight: 600;
+
+  }
+
+  h5 {
+      font-weight: 400;
+      font-size: 0.9em;
+      margin: 0;
+  }
+
+  .music-info {
+    font-size: 0.9em;
   }
 
   @include breakpoint(md) {
@@ -109,8 +122,8 @@
     //transform: scale(1.2)
   }
   > div {
-      width: 200%;
-    
+    width: 200%;
+
     height: 100%;
     display: flex;
     justify-content: center;
@@ -118,7 +131,7 @@
     padding: 0 2em;
     z-index: 2;
     @include breakpoint(md) {
-        width: 140%;
+      width: 140%;
     }
   }
 }

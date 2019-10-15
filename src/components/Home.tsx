@@ -111,7 +111,7 @@ class Home extends React.Component<Props, State> {
     render() {
         let topTracks = this.state.topTracks.map((item, i) => {
             return (
-                <div style={i === 1 ? { fontSize: '1.2em' } : { fontSize: '1em' }}>
+                <div className="music-info" style={i === 1 ? { fontSize: '1.2em' } : { fontSize: 'inherited' }}>
                     <h2>{item.name}</h2>
                     <h4>{item.artist}</h4>
                 </div>
@@ -139,7 +139,7 @@ class Home extends React.Component<Props, State> {
 
         let playHistory = this.state.playHistory.map((item, i) => {
             return (
-                <div style={{fontSize: '0.6em'}}>
+                <div style={{ fontSize: '0.8em' }}>
                     <h2>{item.name}</h2>
                     <h4>{item.artist}</h4>
                 </div>
@@ -163,16 +163,20 @@ class Home extends React.Component<Props, State> {
                     </div>
                     <div className="top-tracks">
                         <h1>Your Top Tracks</h1>
-                        <p style={{ padding: 0 }}>Based on last month's activity</p>
+                        <h5>Based on last month's activity</h5>
                         {topTracks}
                     </div>
                     <div className="top-artists">
                         <h1>Your Top Artists</h1>
+                        <h5>Based on last month's activity</h5>
                         {topArtists}
                     </div>
                     <div className="play-history"><h1>Your Play History</h1>
-                        <h2>{playHistory}
-                        </h2></div>
+                        <h5>Based on your recent listening activity</h5>
+                        {playHistory}
+
+                    </div>
+
                 </div>
 
             </div>
