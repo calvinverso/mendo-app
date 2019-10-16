@@ -3,11 +3,15 @@ import './Landing.scss';
 import SpotifyWebAPI from 'spotify-web-api-js';
 import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
+import { Link } from "react-router-dom";
 
 import './Home.scss';
+
+
 import mendo_dark from '../images/mendo-dark.svg';
 import vr from '../images/vr.png'
-import { string } from 'prop-types';
+
+
 
 const SpotifyAPI = new SpotifyWebAPI();
 
@@ -71,7 +75,7 @@ class Home extends React.Component<Props, State> {
     }
     getTopTracks() {
         SpotifyAPI.getMyTopTracks({ limit: 5, time_range: this.state.tracksTimeRange }).then((response: any) => {
-           // console.log("your top tracks")
+            // console.log("your top tracks")
             //console.log(response);
             var topTracks: [{ name: string, artist: string, image: string }] = [{ name: '', artist: '', image: '' }]
             var track;
@@ -84,7 +88,7 @@ class Home extends React.Component<Props, State> {
                 }
                 topTracks.push(track);
             })
-           // console.log(topTracks)
+            // console.log(topTracks)
             this.setState({ topTracks: topTracks })
         })
     }
@@ -100,7 +104,7 @@ class Home extends React.Component<Props, State> {
 
             response.items.map((item) => {
                 var main_genres = [];
-               // console.log(item.name)
+                // console.log(item.name)
                 item.genres.map((genre, i) => {
                     if (i < 2) {
                         //console.log("GENRE: " + genre)
@@ -176,7 +180,9 @@ class Home extends React.Component<Props, State> {
                         <div>
                             <h1>Let's create something awesome</h1>
                             <p>Currently in development</p>
-                            <button className="main-bt">Coming Soon</button>
+                            <Link to="/create">
+                                <button className="main-bt">Coming Soon</button>
+                            </Link>
                         </div>
 
                         <img src={vr} className="play"></img>
@@ -194,11 +200,8 @@ class Home extends React.Component<Props, State> {
                     <div className="play-history"><h1>Your Play History</h1>
                         <h5>Based on your recent listening activity</h5>
                         {playHistory}
-
                     </div>
-
                 </div>
-
             </div>
         );
     }

@@ -1,11 +1,16 @@
 import React from 'react';
 import './App.scss';
 import queryString from 'query-string';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 /*COMPONENTS*/
 import Landing from './components/Landing';
 import Home from './components/Home';
+import Create from './components/Create'
 
 interface Props { }
 
@@ -60,11 +65,20 @@ class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="App" >
+      <Router>
+        <div className="App" >
 
-        {this.state.userData ? <Home access_token={this.state.access_token}/> : <Landing />}
 
-      </div>
+          <Switch>
+            <Route path="/create">
+              <Create />
+            </Route>
+            <Route path="/">
+              {this.state.userData ? <Home access_token={this.state.access_token} /> : <Landing />}
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
