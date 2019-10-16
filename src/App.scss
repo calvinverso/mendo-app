@@ -7,7 +7,8 @@ $colors: (
   pink: #ffabca,
   red: #e33065,
   dark-blue: #122a4d,
-  light-blue: #30c8f2
+  light-blue: #30c8f2,
+  orange: #FF8A7D,
 );
 
 @function color($color-name) {
@@ -55,4 +56,8 @@ $colors: (
   left: 0;
   width: 40vmin;
   padding: 1em;
+
+  @include breakpoint(md) {
+    width: 35vmin;
+  }
 }

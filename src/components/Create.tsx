@@ -1,5 +1,5 @@
 import React from 'react';
-//import queryString from 'query-string';
+import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Icon from 'antd/es/icon';
 
@@ -15,6 +15,9 @@ import fireplace from '../images/fireplace.png'
 import run from '../images/run.png';
 import dance from '../images/dance.png';
 import drinks from '../images/drinks.png';
+import selfie from '../images/selfie.png';
+import vr from '../images/vr.png'
+
 
 
 
@@ -27,7 +30,10 @@ interface State {
     target_energy: number,
     target_danceability: number,
     target_popularity: number,
-    target_valence: number
+    target_valence: number,
+
+    playlistName: string,
+    access_token: string,
 
 };
 
@@ -43,10 +49,19 @@ class Create extends React.Component<Props, State> {
         target_energy: 5,
         target_danceability: 5,
         target_popularity: 5,
-        target_valence: 5
+        target_valence: 5,
+
+        playlistName: "Mendo's Awesome Mix",
+        access_token: ''
+
 
     };
     componentDidMount() {
+        let access_token = queryString.parse(window.location.search).access_token;
+        console.log(access_token);
+        if (access_token !== undefined) {
+            this.setState({ access_token: access_token.toString() })
+        }
         // this.getInfo();
         //console.log(this.state.userData)
     }
@@ -88,6 +103,22 @@ class Create extends React.Component<Props, State> {
 
     }
 
+    createPlaylist = async () => {
+        console.log("hey matenme")
+        await fetch(process.env.REACT_APP_ENDPOINT + "/createplaylist?" +
+            queryString.stringify({
+                target_energy: this.state.target_energy,
+                target_danceability: this.state.target_danceability,
+                target_valence: this.state.target_valence,
+                target_popularity: this.state.target_popularity,
+                access_token: this.state.access_token,
+                playlist_name: this.state.playlistName
+            })
+        ).then((res) => {
+            console.log(res)
+            res.json().then((result) => { console.log(result) })
+        })
+    }
 
     render() {
 
@@ -188,13 +219,39 @@ class Create extends React.Component<Props, State> {
         })
 
         return (
-            <div style={{ backgroundColor: "#122a4d" }}>{renderQuestions}
-                {this.state.currentQuestion >= 4 ? 
-                
-                <div>hola</div> 
-                
-                : ''}
+            <div>
+                <div style={{ backgroundColor: "#122a4d" }}>
+                    {renderQuestions}
+                </div>
+                {this.state.currentQuestion >= 4 ?
 
+                    <div className="name-playlist">
+                        <div className="navbar">
+                            <img src={mendo_pink}
+                                className="logo" alt="logo" />
+                        </div>
+                        <div className="final-section">
+                            <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
+                                <img src={vr} className="question-graphic"></img>
+                            </ScrollAnimation>
+                            <div className="input-section">
+                                <h1>Finally, let's name this masterpiece</h1>
+                                {/*}
+                                <div className="play-grid">
+                                    <div id="one"></div><div id="two"></div><div id="three"></div> <div id="four"></div>
+                </div>*/}
+                                <input placeholder="Mendo's Awesome Mix"
+                                    onChange={
+                                        (event) => { this.setState({ playlistName: event.target.value }) }}
+                                />
+
+                                <button className="main-bt" onClick={this.createPlaylist}>CREATE</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    : ''}
             </div>
         );
     }
@@ -233,7 +290,7 @@ const questions = [
         description: "The popularity is based on the total number of plays the track has had and how recent those plays are.",
         lowValue: "Niche af",
         highValue: "Radio popular",
-        graphic: drinks,
+        graphic: selfie,
         style: { backgroundColor: "#30c8f2", color: "#122a4d" },
         primaryColor: "#30c8f2",
         secondaryColor: "#122a4d"

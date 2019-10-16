@@ -172,7 +172,7 @@ class Home extends React.Component<Props, State> {
         return (
             <div>
                 <div className="navbar">
-                    <img src={mendo_dark} className="logo" alt="logo" />
+                    <img src={mendo_dark} className="mendo-logo" alt="logo" />
                 </div>
 
                 <div className="main-grid">
@@ -180,7 +180,7 @@ class Home extends React.Component<Props, State> {
                         <div>
                             <h1>Let's create something awesome</h1>
                             <p>Currently in development</p>
-                            <Link to="/create">
+                            <Link to={"/create?access_token=" + this.props.access_token}>
                                 <button className="main-bt">Coming Soon</button>
                             </Link>
                         </div>

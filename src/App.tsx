@@ -47,18 +47,6 @@ class App extends React.Component<Props, State> {
         console.log(data)
       })
 
-
-      fetch("https://api.spotify.com/v1/me/top/tracks?" +
-        queryString.stringify({
-          time_range: "long_term"
-        }), {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          'Authorization': "Bearer " + access_token
-        }
-      }).then((res) => res.json()).then(data => console.log(data));
-
     }
 
   }

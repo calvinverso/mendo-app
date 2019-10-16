@@ -17,11 +17,10 @@
   margin-top: 5em;
   letter-spacing: 0.145em;
   text-transform: uppercase;
-word-wrap: unset;
+  word-wrap: unset;
   @include breakpoint(sm) {
     font-size: 0.5em;
   }
-  
 }
 
 .numbers {
@@ -59,7 +58,7 @@ word-wrap: unset;
 .question-graphic {
   height: 40vh;
   width: 96%;
-  
+
   object-fit: cover;
   @include breakpoint(sm) {
     height: 80vh;
@@ -119,12 +118,12 @@ word-wrap: unset;
   opacity: 0.1;
   font-weight: 900;
   text-transform: uppercase;
-   
+
   display: flex;
   flex-direction: column;
 
-  >* {
-      margin: -1em 0;
+  > * {
+    margin: -1em 0;
   }
   @include breakpoint(sm) {
     bottom: 30%;
@@ -133,36 +132,130 @@ word-wrap: unset;
   }
 }
 
-
 .next {
-    background-color: transparent;
-    border: none;
+  background-color: transparent;
+  border: none;
 
-    font-size: 4em;
+  font-size: 4em;
 }
 
 .back {
-    background-color: transparent;
-    border: none;
-    font-size: 3.5em;
-    opacity: 0.5;
+  background-color: transparent;
+  border: none;
+  font-size: 3.5em;
+  opacity: 0.5;
 }
 
 .bottom-nav {
-    position: absolute;
-    bottom: 0;
-    right: auto;
+  position: absolute;
+  bottom: 0;
+  right: auto;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  padding: 1em;
+
+  @include breakpoint(sm) {
+    width: 68vw;
+    padding: 2em;
+    right: 0;
+  }
+}
+
+.play-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  width: 25em;
+  height: 25em;
+  padding: 2em 0;
+  border-radius: 10px;
+
+  #one {
+    background-color: color(pink);
+    //background-color: white;
+  }
+
+  #two {
+    // grid-area: "blue";
+    background-color: color(dark-blue);
+  }
+  #three {
+    //grid-area: "lightblue";
+    background-color: color(light-blue);
+  }
+  #four {
+    // grid-area: "red";
+    background-color: color(red);
+  }
+}
+
+.name-playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: color(blue);
+  height: 100vh;
+  //padding: 0 3em;
+
+  color: color(pink);
+  h1 {
+    font-size: 1.75em;
+    text-align: left;
+    padding: 0 1em;
+  }
+  input {
+    margin: 2em 0 ;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid color(pink);
+    transition: border-width 0.1s ease-in;
+    width: 15em;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 1.25em;
+    color: color(pink);
+    font-weight: 600;
+
+    //border-color: color(dark-blue);
+  }
+
+  input:focus {
+    border-width: 3px;
+    outline: none;
+  }
+
+  input:focus::placeholder {
+    opacity: 0.2;
+  }
+}
+
+::placeholder {
+  color: color(pink);
+  opacity: 0.4;
+}
+
+
+.final-section {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 90vw;
-    padding: 1em;
+    flex-direction: column;
 
     @include breakpoint(sm) {
-        width: 68vw;
-        padding: 2em;
-        right: 0;
+        flex-direction: row;
+    }
+
+    .input-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.5em;
+    }
+
+    .main-bt {
+        color: color(blue);
+        background-color: color(pink);
     }
 }

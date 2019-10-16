@@ -60,13 +60,12 @@
     text-transform: uppercase;
     margin-top: 0;
     font-weight: 600;
-
   }
 
   h5 {
-      font-weight: 400;
-      font-size: 0.9em;
-      margin: 0;
+    font-weight: 400;
+    font-size: 0.9em;
+    margin: 0;
   }
 
   .music-info {
@@ -103,15 +102,23 @@
   background-color: color(red);
   color: white;
   grid-area: playlists;
+  
   display: grid;
   grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-  padding: 0;
+  grid-template-rows: auto;
   font-size: 1.2em;
+  padding: 0;
+  //font-size: 1.1em;
+
+  h1 {
+      font-size: 2.5em;
+  }
 
   @include breakpoint(md) {
+    display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
+    font-size: 1.2em;
   }
 
   .play {
@@ -120,6 +127,11 @@
     object-fit: cover;
     overflow: hidden;
     border-radius: 0px 10px 10px 0px;
+
+    @include breakpoint(md) {
+        border-radius: 0px 10px 10px 0px;
+
+      }
   }
 
   .main-bt {
