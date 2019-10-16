@@ -35,6 +35,9 @@ interface State {
     playlistName: string,
     access_token: string,
 
+    playlistRequested: boolean,
+    createdPlaylist: {}
+
 };
 
 let parameters = []
@@ -52,8 +55,10 @@ class Create extends React.Component<Props, State> {
         target_valence: 5,
 
         playlistName: "Mendo's Awesome Mix",
-        access_token: ''
+        access_token: '',
 
+        playlistRequested: false,
+        createdPlaylist: null
 
     };
     componentDidMount() {
@@ -104,7 +109,11 @@ class Create extends React.Component<Props, State> {
     }
 
     createPlaylist = async () => {
-        console.log("hey matenme")
+        console.log("hey matenme");
+        this.setState({
+            playlistRequested: true
+        })
+
         await fetch(process.env.REACT_APP_ENDPOINT + "/createplaylist?" +
             queryString.stringify({
                 target_energy: this.state.target_energy,
@@ -115,8 +124,13 @@ class Create extends React.Component<Props, State> {
                 playlist_name: this.state.playlistName
             })
         ).then((res) => {
-           // console.log(res)
-            res.json().then((result) => { console.log(result) })
+            // console.log(res)
+            res.json().then((result) => {
+                console.log(result);
+                this.setState({
+                    createdPlaylist: result
+                })
+            })
         })
     }
 
@@ -220,7 +234,7 @@ class Create extends React.Component<Props, State> {
                 <div style={{ backgroundColor: "#122a4d" }}>
                     {renderQuestions}
                 </div>
-                {this.state.currentQuestion >= 4 ?
+                {this.state.currentQuestion >= 4 && !this.state.playlistRequested ?
 
                     <div className="name-playlist">
                         <div className="navbar">
@@ -248,7 +262,13 @@ class Create extends React.Component<Props, State> {
 
                     </div>
 
-                    : ''}
+                    : (this.state.playlistRequested ?
+                        (!this.state.createdPlaylist ?
+                            <div>CREATING</div>
+                            :
+                            <div>DONE</div>
+                        ) : '')
+                }
             </div>
         );
     }
