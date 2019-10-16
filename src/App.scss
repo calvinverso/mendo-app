@@ -1,5 +1,6 @@
 @import url("https://rsms.me/inter/inter.css");
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,700&display=swap");
+//@import '~antd/dist/antd.css';
 
 $colors: (
   blue: #1252c9,
@@ -38,7 +39,7 @@ $colors: (
 .App {
   text-align: center;
   font-family: Inter, sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   @include breakpoint(sm) {
     font-size: 13px;
   }

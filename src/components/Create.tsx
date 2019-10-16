@@ -1,6 +1,7 @@
 import React from 'react';
 //import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
+import Icon from 'antd/es/icon';
 
 import './Create.scss';
 
@@ -52,6 +53,10 @@ class Create extends React.Component<Props, State> {
     handleLogin() {
         console.log(process.env.REACT_APP_ENDPOINT)
         window.location.href = process.env.REACT_APP_ENDPOINT + "/login";
+    }
+
+    handleLast = () => {
+        this.setState({ currentQuestion: this.state.currentQuestion - 1, selected: 0 })
     }
 
     handleNext = category => {
@@ -116,7 +121,7 @@ class Create extends React.Component<Props, State> {
                         </ScrollAnimation>
 
                         <div className="description">
-                            {j === 0 ? lowVal : j === 4 ? highVal : ''}
+                            {j === 0 ? lowVal : j === 4 ? highVal : '.'}
                         </div>
                     </span>
                 )
@@ -125,44 +130,72 @@ class Create extends React.Component<Props, State> {
             return (
                 <div>
                     {this.state.currentQuestion === i ?
-                        <div className="question" style={item.style}>
-                            <div className="navbar">
-                                <img src={mendo_dark} className="logo" alt="logo" />
-                            </div>
-                            <div className="main-section">
-                                <span className="category outline"
-                                    style={{ WebkitTextStrokeColor: item.secondaryColor }}>
-                                    <ScrollAnimation animateIn="fadeIn">
-                                        {item.category}
+                        <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut" duration={0.5}>
+                            <div className="question" style={item.style}>
+                                <div className="navbar">
+                                    <img src={item.secondaryColor === "#ffabca" ? mendo_pink : mendo_dark}
+                                        className="logo" alt="logo" />
+                                </div>
+                                <div className="main-section">
+                                    <span className="category outline"
+                                        style={{ WebkitTextStrokeColor: item.secondaryColor }}>
+                                        <ScrollAnimation animateIn="fadeIn">
+                                            <span>{item.category}</span>
+                                        </ScrollAnimation>
+                                        <ScrollAnimation animateIn="fadeIn">
+                                            <span>{item.category}</span>
+                                        </ScrollAnimation>
+                                        <ScrollAnimation animateIn="fadeIn">
+                                            <span>{item.category}</span>
+                                        </ScrollAnimation>
+                                    </span>
+                                    <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
+                                        <img src={item.graphic} className="question-graphic"></img>
                                     </ScrollAnimation>
-                                </span>
-                                <ScrollAnimation animateIn="fadeInLeft">
-                                    <img src={item.graphic} className="question-graphic"></img>
-                                </ScrollAnimation>
 
-                                <div className="question-section">
-                                    <div className="text-area">
-                                        <ScrollAnimation animateIn="fadeInUp">
-                                            <h1>{item.question}</h1>
-                                        </ScrollAnimation>
-                                        <ScrollAnimation animateIn="fadeInUp">
-                                            <p>{item.description}</p>
-                                        </ScrollAnimation>
+                                    <div className="question-section">
+
+                                        <div className="text-area">
+                                            <ScrollAnimation animateIn="fadeInUp">
+                                                <h1>{item.question}</h1>
+                                            </ScrollAnimation>
+                                            <ScrollAnimation animateIn="fadeInUp">
+                                                <p>{item.description}</p>
+                                            </ScrollAnimation>
+                                        </div>
+                                        <div className="numbers">
+                                            {scale}
+                                        </div>
+
+
                                     </div>
-                                    <div className="numbers">
-                                        {scale}
+                                    <div className="bottom-nav">
+                                        {i != 0 ? <button className="back" onClick={this.handleLast}>
+                                            <Icon type="left-circle" style={{ color: item.secondaryColor }} />
+                                        </button> : <div></div>}
+
+                                        <button className="next" onClick={this.handleNext}>
+                                            <Icon type="right-circle" theme="filled" style={{ color: item.secondaryColor }} />
+                                        </button>
                                     </div>
-                                    <button onClick={this.handleNext}>Next</button>
                                 </div>
                             </div>
-                        </div> : ''}
+                        </ScrollAnimation>
+                        : ''}
 
                 </div>
             )
         })
 
         return (
-            <div>{renderQuestions}</div>
+            <div style={{ backgroundColor: "#122a4d" }}>{renderQuestions}
+                {this.state.currentQuestion >= 4 ? 
+                
+                <div>hola</div> 
+                
+                : ''}
+
+            </div>
         );
     }
 }
@@ -175,8 +208,8 @@ const questions = [
         category: "energy",
         question: "How energetic do you feel?",
         description: "Energetic tracks feel fast, loud and noisy",
-        lowValue: "Low energy",
-        highValue: "High energy",
+        lowValue: "Low",
+        highValue: "High",
         graphic: run,
         style: { backgroundColor: "#e33065", color: "white" },
         primaryColor: "#e33065",
@@ -187,7 +220,7 @@ const questions = [
         question: "How much do you want to dance?",
         description: "Based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity",
         lowValue: "Let's chill",
-        highValue: "I wanna rock",
+        highValue: "Let's rock",
         graphic: dance,
         style: { backgroundColor: "#1252c9", color: "#ffabca" },
         primaryColor: "#1252c9",
@@ -197,7 +230,7 @@ const questions = [
     {
         category: "trendy",
         question: "How trendy do you want your songs?",
-        description: "Based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity",
+        description: "The popularity is based on the total number of plays the track has had and how recent those plays are.",
         lowValue: "Niche af",
         highValue: "Radio popular",
         graphic: drinks,
@@ -208,7 +241,7 @@ const questions = [
     {
         category: "mood",
         question: "How's your mood?",
-        description: "Based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity",
+        description: "Songs with high valence tend to have a positive mood, while tracks with low valence sound more negative",
         lowValue: "Negative",
         highValue: "Positive",
         graphic: fireplace,
