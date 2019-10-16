@@ -115,15 +115,12 @@ class Create extends React.Component<Props, State> {
                 playlist_name: this.state.playlistName
             })
         ).then((res) => {
-            console.log(res)
+           // console.log(res)
             res.json().then((result) => { console.log(result) })
         })
     }
 
     render() {
-
-
-
         let renderQuestions = questions.map((item, i) => {
 
             var lowVal = item.lowValue;
@@ -275,7 +272,7 @@ const questions = [
     {
         category: "dance",
         question: "How much do you want to dance?",
-        description: "Based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity",
+        description: "Based on tempo, rhythm stability, beat strength, and overall regularity",
         lowValue: "Let's chill",
         highValue: "Let's rock",
         graphic: dance,
@@ -289,7 +286,7 @@ const questions = [
         question: "How trendy do you want your songs?",
         description: "The popularity is based on the total number of plays the track has had and how recent those plays are.",
         lowValue: "Niche af",
-        highValue: "Radio popular",
+        highValue: "Popular",
         graphic: selfie,
         style: { backgroundColor: "#30c8f2", color: "#122a4d" },
         primaryColor: "#30c8f2",
