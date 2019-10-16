@@ -11,6 +11,7 @@ import {
 import Landing from './components/Landing';
 import Home from './components/Home';
 import Create from './components/Create'
+import PlaylistPage from './components/PlaylistPage';
 
 interface Props { }
 
@@ -55,9 +56,10 @@ class App extends React.Component<Props, State> {
     return (
       <Router>
         <div className="App" >
-
-
           <Switch>
+            <Route path="/playlist">
+              <PlaylistPage id="" access_token={this.state.access_token}/>
+            </Route>
             <Route path="/create">
               <Create />
             </Route>

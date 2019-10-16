@@ -2,6 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Icon from 'antd/es/icon';
+import PlaylistPage from './PlaylistPage';
 
 import './Create.scss';
 
@@ -21,6 +22,7 @@ import vr from '../images/vr.png'
 
 
 
+
 interface Props { }
 
 interface State {
@@ -36,7 +38,7 @@ interface State {
     access_token: string,
 
     playlistRequested: boolean,
-    createdPlaylist: {}
+    createdId: string,
 
 };
 
@@ -58,7 +60,7 @@ class Create extends React.Component<Props, State> {
         access_token: '',
 
         playlistRequested: false,
-        createdPlaylist: null
+        createdId: null
 
     };
     componentDidMount() {
@@ -128,7 +130,7 @@ class Create extends React.Component<Props, State> {
             res.json().then((result) => {
                 console.log(result);
                 this.setState({
-                    createdPlaylist: result
+                    createdId: result.id
                 })
             })
         })
@@ -263,10 +265,10 @@ class Create extends React.Component<Props, State> {
                     </div>
 
                     : (this.state.playlistRequested ?
-                        (!this.state.createdPlaylist ?
+                        (!this.state.createdId ?
                             <div>CREATING</div>
                             :
-                            <div>DONE</div>
+                            <PlaylistPage id={this.state.createdId} access_token={this.state.access_token}/>
                         ) : '')
                 }
             </div>
