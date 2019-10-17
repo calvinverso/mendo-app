@@ -134,12 +134,18 @@ class Home extends React.Component<Props, State> {
 */
     render() {
         let topTracks = this.state.topTracks.map((item, i) => {
-            return (
-                <div className="music-info" style={i === 1 ? { fontSize: '1.2em' } : { fontSize: 'inherited' }}>
-                    <h2>{item.name}</h2>
-                    <h4>{item.artist}</h4>
-                </div>
-            )
+            if (i > 0) {
+                return (
+                    <div className="music-info" style={i === 1 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
+                        <div className="position outline">{i}</div>
+                        <div>
+                            <h2>{item.name}</h2>
+                            <h4>{item.artist}</h4>
+                        </div>
+                    </div>
+                )
+            }
+
         })
 
         let topArtists = this.state.topArtists.map((item, i) => {
@@ -152,13 +158,18 @@ class Home extends React.Component<Props, State> {
                 }
             })
 
+            if (i > 0) {
+                return (
+                    <div className="music-info" style={i === 1 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
+                        <div className="position outline">{i}</div>
+                        <div>
+                            <h2>{item.name}</h2>
+                            {genres}
+                        </div>
+                    </div>
+                )
+            }
 
-            return (
-                <div style={i === 1 ? { fontSize: '1.2em' } : { fontSize: '1em' }}>
-                    <h2>{item.name}</h2>
-                    {genres}
-                </div>
-            )
         })
 
         let playHistory = this.state.playHistory.map((item, i) => {
@@ -179,9 +190,9 @@ class Home extends React.Component<Props, State> {
                     <div className="playlists">
                         <div>
                             <h1>Let's create something awesome</h1>
-                            <p>Currently in development</p>
+                            <p>Personalize your music experience</p>
                             <Link to={"/create?access_token=" + this.props.access_token}>
-                                <button className="main-bt">Coming Soon</button>
+                                <button className="main-bt">Get Started</button>
                             </Link>
                         </div>
 
