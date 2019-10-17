@@ -1,1 +1,117 @@
-@import '../App.scss';
+@import "../App.scss";
+
+.playlist-page {
+  background: color(red);
+  color: white;
+  min-height: 100vh;
+}
+
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .artwork {
+    width: 20em;
+    height: 20em;
+    object-fit: cover;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  @include breakpoint(sm) {
+    display: grid;
+    grid-template-columns: 40% 60%;
+  }
+}
+
+.playlist-info {
+  h1 {
+    font-weight: 900;
+    font-size: 2.5em;
+    margin: .5em;
+    margin-bottom: .25em;
+  }
+
+  h3 {
+    font-weight: 600;
+    margin-top: 0;
+  }
+  
+  @include breakpoint(sm) {
+    align-self: flex-start;
+  }
+
+  position: sticky;
+  top: 2em;
+}
+
+.track-container {
+  background-color: white;
+  color: color(dark-blue);
+  border-radius: 10px;
+  margin: 1em;
+
+  padding: 1em;
+  z-index: 3;
+  .track-comp {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    width: 90vw;
+    @include breakpoint(sm) {
+      width: initial;
+    }
+  }
+  .album {
+    width: 6em;
+    height: 6em;
+    object-fit: cover;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    //justify-self: flex-end;
+    //margin: 1em;
+
+    @include breakpoint(sm) {
+      margin: .5em;
+    }
+  }
+
+  .track-info {
+    text-align: left;
+    justify-self: flex-start;
+
+    h3 {
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    * {
+      margin: 0.2em;
+    }
+    margin: 1em;
+
+    @include breakpoint(sm) {
+      margin: 2em;
+    }
+  }
+}
+
+.main-btn {
+  border-radius: 2em;
+  border: none;
+
+  text-transform: uppercase;
+  letter-spacing: 0.175em;
+  font-weight: 600;
+  font-size: 1.2em;
+  font-family: Inter;
+  margin: 1em 0;
+
+  width: 12em;
+  height: 3em;
+  cursor: pointer;
+
+  color: color(red);
+  background: white;
+}

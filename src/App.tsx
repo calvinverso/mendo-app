@@ -57,7 +57,7 @@ class App extends React.Component<Props, State> {
       <Router>
         <div className="App" >
           <Switch>
-            <Route path="/playlist">
+            <Route path="/playlist/:id">
               <PlaylistPage id="" access_token={this.state.access_token}/>
             </Route>
             <Route path="/create">

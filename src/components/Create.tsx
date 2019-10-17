@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Icon from 'antd/es/icon';
 import PlaylistPage from './PlaylistPage';
+import { Link } from "react-router-dom";
 
 import './Create.scss';
 
@@ -81,7 +82,7 @@ class Create extends React.Component<Props, State> {
         this.setState({ currentQuestion: this.state.currentQuestion - 1, selected: 0 })
     }
 
-    handleNext = category => {
+    handleNext(category) {
 
         if (category === "energy") {
             this.setState({
@@ -115,6 +116,7 @@ class Create extends React.Component<Props, State> {
         this.setState({
             playlistRequested: true
         })
+
 
         await fetch(process.env.REACT_APP_ENDPOINT + "/createplaylist?" +
             queryString.stringify({
@@ -174,57 +176,58 @@ class Create extends React.Component<Props, State> {
             return (
                 <div>
                     {this.state.currentQuestion === i ?
-                        <ScrollAnimation animateIn="fadeIn" animateOut="fadeOut" duration={0.5}>
-                            <div className="question" style={item.style}>
-                                <div className="navbar">
+
+                        <div className="question" style={item.style}>
+                            <div className="navbar">
+                                <Link to="/">
                                     <img src={item.secondaryColor === "#ffabca" ? mendo_pink : mendo_dark}
                                         className="logo" alt="logo" />
-                                </div>
-                                <div className="main-section">
-                                    <span className="category outline"
-                                        style={{ WebkitTextStrokeColor: item.secondaryColor }}>
-                                        <ScrollAnimation animateIn="fadeIn">
-                                            <span>{item.category}</span>
-                                        </ScrollAnimation>
-                                        <ScrollAnimation animateIn="fadeIn">
-                                            <span>{item.category}</span>
-                                        </ScrollAnimation>
-                                        <ScrollAnimation animateIn="fadeIn">
-                                            <span>{item.category}</span>
-                                        </ScrollAnimation>
-                                    </span>
-                                    <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
-                                        <img src={item.graphic} className="question-graphic"></img>
+                                </Link>
+                            </div>
+                            <div className="main-section">
+                                <span className="category outline"
+                                    style={{ WebkitTextStrokeColor: item.secondaryColor }}>
+                                    <ScrollAnimation animateIn="fadeIn">
+                                        <span>{item.category}</span>
                                     </ScrollAnimation>
+                                    <ScrollAnimation animateIn="fadeIn">
+                                        <span>{item.category}</span>
+                                    </ScrollAnimation>
+                                    <ScrollAnimation animateIn="fadeIn">
+                                        <span>{item.category}</span>
+                                    </ScrollAnimation>
+                                </span>
+                                <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
+                                    <img src={item.graphic} className="question-graphic"></img>
+                                </ScrollAnimation>
 
-                                    <div className="question-section">
+                                <div className="question-section">
 
-                                        <div className="text-area">
-                                            <ScrollAnimation animateIn="fadeInUp">
-                                                <h1>{item.question}</h1>
-                                            </ScrollAnimation>
-                                            <ScrollAnimation animateIn="fadeInUp">
-                                                <p>{item.description}</p>
-                                            </ScrollAnimation>
-                                        </div>
-                                        <div className="numbers">
-                                            {scale}
-                                        </div>
-
-
+                                    <div className="text-area">
+                                        <ScrollAnimation animateIn="fadeInUp">
+                                            <h1>{item.question}</h1>
+                                        </ScrollAnimation>
+                                        <ScrollAnimation animateIn="fadeInUp">
+                                            <p>{item.description}</p>
+                                        </ScrollAnimation>
                                     </div>
-                                    <div className="bottom-nav">
-                                        {i != 0 ? <button className="back" onClick={this.handleLast}>
-                                            <Icon type="left-circle" style={{ color: item.secondaryColor }} />
-                                        </button> : <div></div>}
-
-                                        <button className="next" onClick={this.handleNext}>
-                                            <Icon type="right-circle" theme="filled" style={{ color: item.secondaryColor }} />
-                                        </button>
+                                    <div className="numbers">
+                                        {scale}
                                     </div>
+
+
+                                </div>
+                                <div className="bottom-nav">
+                                    {i != 0 ? <button className="back" onClick={this.handleLast}>
+                                        <Icon type="left-circle" style={{ color: item.secondaryColor }} />
+                                    </button> : <div></div>}
+
+                                    <button className="next" onClick={() => { this.handleNext(item.category) }}>
+                                        <Icon type="right-circle" theme="filled" style={{ color: item.secondaryColor }} />
+                                    </button>
                                 </div>
                             </div>
-                        </ScrollAnimation>
+                        </div>
                         : ''}
 
                 </div>
@@ -268,7 +271,7 @@ class Create extends React.Component<Props, State> {
                         (!this.state.createdId ?
                             <div>CREATING</div>
                             :
-                            <PlaylistPage id={this.state.createdId} access_token={this.state.access_token}/>
+                            <PlaylistPage id={this.state.createdId} access_token={this.state.access_token} />
                         ) : '')
                 }
             </div>
