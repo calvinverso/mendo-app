@@ -187,13 +187,13 @@ class Create extends React.Component<Props, State> {
                             <div className="main-section">
                                 <span className="category outline"
                                     style={{ WebkitTextStrokeColor: item.secondaryColor }}>
-                                    <ScrollAnimation animateIn="fadeIn">
+                                    <ScrollAnimation animateIn="fadeInRight">
                                         <span>{item.category}</span>
                                     </ScrollAnimation>
-                                    <ScrollAnimation animateIn="fadeIn">
+                                    <ScrollAnimation animateIn="fadeInRight">
                                         <span>{item.category}</span>
                                     </ScrollAnimation>
-                                    <ScrollAnimation animateIn="fadeIn">
+                                    <ScrollAnimation animateIn="fadeInRight">
                                         <span>{item.category}</span>
                                     </ScrollAnimation>
                                 </span>
@@ -221,7 +221,6 @@ class Create extends React.Component<Props, State> {
                                     {i != 0 ? <button className="back" onClick={this.handleLast}>
                                         <Icon type="left-circle" style={{ color: item.secondaryColor }} />
                                     </button> : <div></div>}
-
                                     <button className="next" onClick={() => { this.handleNext(item.category) }}>
                                         <Icon type="right-circle" theme="filled" style={{ color: item.secondaryColor }} />
                                     </button>
@@ -251,17 +250,18 @@ class Create extends React.Component<Props, State> {
                                 <img src={vr} className="question-graphic"></img>
                             </ScrollAnimation>
                             <div className="input-section">
-                                <h1>Finally, let's name this masterpiece</h1>
-                                {/*}
-                                <div className="play-grid">
-                                    <div id="one"></div><div id="two"></div><div id="three"></div> <div id="four"></div>
-                </div>*/}
-                                <input placeholder="Mendo's Awesome Mix"
-                                    onChange={
-                                        (event) => { this.setState({ playlistName: event.target.value }) }}
-                                />
-
-                                <button className="main-bt" onClick={this.createPlaylist}>CREATE</button>
+                                <ScrollAnimation animateIn="fadeInUp" >
+                                    <h1>Finally, let's name this masterpiece</h1>
+                                </ScrollAnimation>
+                                <ScrollAnimation animateIn="fadeInUp" >
+                                    <input placeholder="Mendo's Awesome Mix"
+                                        onChange={
+                                            (event) => { this.setState({ playlistName: event.target.value }) }}
+                                    />
+                                </ScrollAnimation>
+                                <ScrollAnimation animateIn="fadeInUp" >
+                                    <button className="main-bt" onClick={this.createPlaylist}>CREATE</button>
+                                </ScrollAnimation>
                             </div>
                         </div>
 
@@ -269,11 +269,17 @@ class Create extends React.Component<Props, State> {
 
                     : (this.state.playlistRequested ?
                         (!this.state.createdId ?
-                            <div>CREATING</div>
+
+                            <div className="creating">
+                                <h1>Your next experience is almost ready</h1>
+                                <Icon type="loading" className="loading" spin />
+                            </div>
                             :
                             <PlaylistPage id={this.state.createdId} access_token={this.state.access_token} />
                         ) : '')
                 }
+
+
             </div>
         );
     }

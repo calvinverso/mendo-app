@@ -1,4 +1,5 @@
 @import "../App.scss";
+//@import "~antd/dist/antd.css";
 
 .question {
   background: color(red);
@@ -235,7 +236,7 @@
   }
 
   input:focus {
-    border-width: 3px;
+    border-width: 2px;
     outline: none;
   }
 
@@ -267,5 +268,39 @@
   .main-bt {
     color: color(blue);
     background-color: color(pink);
+  }
+}
+
+.creating {
+  background-color: color(blue);
+  color: pink;
+  font-size: 1.5em;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  align-items: center;
+  justify-content: center;
+
+  .loading {
+    font-size: 4em;
+    margin: 1em;
+    display: inline-block;
+    -webkit-animation: loadingCircle 1s infinite linear;
+    animation: loadingCircle 1s infinite linear;
+  }
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

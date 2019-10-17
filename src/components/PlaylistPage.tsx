@@ -3,7 +3,7 @@ import './PlaylistPage.scss';
 //import queryString from 'query-string';
 import {
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 import ScrollAnimation from 'react-animate-on-scroll';
 
 
@@ -80,7 +80,7 @@ class PlaylistPage extends React.Component<Props, State> {
     }
 
     handlePlay(id) {
-        window.location.href = "https://open.spotify.com/playlist/" + id;
+        window.open("https://open.spotify.com/playlist/" + id, '_blank');
     }
 
     render() {
@@ -88,14 +88,16 @@ class PlaylistPage extends React.Component<Props, State> {
         let tracks = this.state.playlistInfo.tracks.map((track, i) => {
             if (i > 0) {
                 return (
-                    <div className="track-comp">
-                        <img src={track.image} className="album" />
-                        <div className="track-info">
-                            <h2>{track.name}</h2>
-                            <h3>{track.artist}</h3>
-                            <h4>{track.album}</h4>
+                    <ScrollAnimation animateIn="fadeIn" animateOnce={true}>
+                        <div className="track-comp">
+                            <img src={track.image} className="album" />
+                            <div className="track-info">
+                                <h2>{track.name}</h2>
+                                <h3>{track.artist}</h3>
+                                <h4>{track.album}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </ScrollAnimation>
                 )
             }
         })
@@ -110,17 +112,20 @@ class PlaylistPage extends React.Component<Props, State> {
                 </div>
 
                 <div className="playlist-container">
-                    <div className="playlist-info">
+                    <ScrollAnimation animateIn="fadeInUp" className="playlist-info">
+
                         <img src={playlist} className="artwork" />
                         <h1>{name}</h1>
                         <h3>by {owner}</h3>
                         <button className="main-btn"
                             onClick={() => this.handlePlay(this.props.id)}>Play</button>
-                    </div>
 
-                    <div className="track-container">
-                        {tracks}
-                    </div>
+                    </ScrollAnimation>
+                    <ScrollAnimation animateIn="fadeInUp">
+                        <div className="track-container">
+                            {tracks}
+                        </div>
+                    </ScrollAnimation>
                 </div>
 
             </div>
