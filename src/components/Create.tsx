@@ -101,7 +101,7 @@ class Create extends React.Component<Props, State> {
             console.log(this.state.target_valence)
         } else if (category === "trendy") {
             this.setState({
-                target_popularity: this.state.selected * 20
+                target_popularity: this.state.selected * 17
             })
             console.log(this.state.target_popularity)
         }
