@@ -42,6 +42,7 @@ class PlaylistPage extends React.Component<Props, State> {
         //console.log(this.state.userData)
     }
 
+    //Obtains the playlist's required information using the id received as props
     getInfo() {
         console.log(this.props.id);
         SpotifyAPI.setAccessToken(this.props.access_token);
@@ -70,7 +71,6 @@ class PlaylistPage extends React.Component<Props, State> {
                     image: response.images[0],
                     tracks: tracks
                 }
-
                 this.setState({ playlistInfo: playlist })
             })
         }
@@ -83,6 +83,7 @@ class PlaylistPage extends React.Component<Props, State> {
 
     render() {
 
+        //Iterates and returns every single track in a playlist
         let tracks = this.state.playlistInfo.tracks.filter((track, i) => i > 0).map((track, i) => {
             return (
                 <ScrollAnimation animateIn="fadeIn" animateOnce={true}>
@@ -117,7 +118,7 @@ class PlaylistPage extends React.Component<Props, State> {
                             onClick={() => this.handlePlay(this.props.id)}>Play</button>
 
                     </ScrollAnimation>
-                    <ScrollAnimation animateIn="fadeInUp">
+                    <ScrollAnimation animateIn="fadeInUp" delay={1000}>
                         <div className="track-container">
                             {tracks}
                         </div>
