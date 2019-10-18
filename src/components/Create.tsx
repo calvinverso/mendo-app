@@ -86,22 +86,22 @@ class Create extends React.Component<Props, State> {
 
         if (category === "energy") {
             this.setState({
-                target_energy: this.state.selected * 2
+                target_energy: this.state.selected * 0.2
             })
             console.log(this.state.target_energy)
         } else if (category === "dance") {
             this.setState({
-                target_danceability: this.state.selected * 2
+                target_danceability: this.state.selected * 0.2
             })
             console.log(this.state.target_danceability)
         } else if (category === "mood") {
             this.setState({
-                target_valence: this.state.selected * 2
+                target_valence: this.state.selected * 0.2
             })
             console.log(this.state.target_valence)
         } else if (category === "trendy") {
             this.setState({
-                target_popularity: this.state.selected * 2
+                target_popularity: this.state.selected * 20
             })
             console.log(this.state.target_popularity)
         }
@@ -113,6 +113,12 @@ class Create extends React.Component<Props, State> {
 
     createPlaylist = async () => {
         console.log("hey matenme");
+
+        console.log("E " + this.state.target_energy);
+        console.log("D " + this.state.target_danceability);
+        console.log("P " + this.state.target_popularity);
+        console.log("M " + this.state.target_valence);
+
         this.setState({
             playlistRequested: true
         })
@@ -271,8 +277,12 @@ class Create extends React.Component<Props, State> {
                         (!this.state.createdId ?
 
                             <div className="creating">
-                                <h1>Your next experience is almost ready</h1>
-                                <Icon type="loading" className="loading" spin />
+                                <ScrollAnimation animateIn="fadeInUp">
+                                    <h1>Your next experience is almost ready</h1>
+                                </ScrollAnimation>
+                                <ScrollAnimation animateIn="fadeInUp">
+                                    <Icon type="loading" className="loading" spin />
+                                </ScrollAnimation>
                             </div>
                             :
                             <PlaylistPage id={this.state.createdId} access_token={this.state.access_token} />
