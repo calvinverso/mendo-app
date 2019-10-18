@@ -9,32 +9,41 @@ import './Create.scss';
 
 /*LOGOS*/
 import mendo_pink from '../images/mendo.svg'
-import mendo_red from '../images/mendo-red.svg'
+//import mendo_red from '../images/mendo-red.svg'
 import mendo_dark from '../images/mendo-dark.svg';
 
 /*GRAPHICS*/
 import fireplace from '../images/fireplace.png'
 import run from '../images/run.png';
 import dance from '../images/dance.png';
-import drinks from '../images/drinks.png';
+//import drinks from '../images/drinks.png';
 import selfie from '../images/selfie.png';
 import vr from '../images/vr.png'
 
-
-
-
-
 interface Props { }
 
+
+/**
+ * selected: Indicated selected answer for current question
+ * currentQuestion
+ * target_energy: Value from 0.0 to 1.0 indicating desired tracks' target energy parameter
+ * target_danceability: Value from 0.0 to 1.0 indicating desired tracks' target danceability parameter
+ * target_valence: Value from 0.0 to 1.0 indicating desired tracks' target valence parameter
+ * target_populariy: Value from 0 to 100 indicating desired popularity parameter
+ * playlistName: Name provided by user
+ * access_token
+ * playlistRequested: Flag to indicate if playlist has started creation
+ * createdId: The created playlist ID
+ */
 interface State {
     selected: number,
     currentQuestion: number,
 
     target_energy: number,
     target_danceability: number,
-    target_popularity: number,
     target_valence: number,
-
+    target_popularity: number,
+   
     playlistName: string,
     access_token: string,
 
@@ -43,21 +52,20 @@ interface State {
 
 };
 
-let parameters = []
-
-
 class Create extends React.Component<Props, State> {
 
     state: State = {
         selected: 0,
         currentQuestion: 0,
 
+        //Default fallback parameter values
         target_energy: 5,
         target_danceability: 5,
         target_popularity: 5,
         target_valence: 5,
 
-        playlistName: "Mendo's Awesome Mix",
+        //Default playlist name 
+        playlistName: "Mendo's Awesome Mix", 
         access_token: '',
 
         playlistRequested: false,
@@ -70,59 +78,46 @@ class Create extends React.Component<Props, State> {
         if (access_token !== undefined) {
             this.setState({ access_token: access_token.toString() })
         }
-        // this.getInfo();
-        //console.log(this.state.userData)
     }
     handleLogin() {
         console.log(process.env.REACT_APP_ENDPOINT)
         window.location.href = process.env.REACT_APP_ENDPOINT + "/login";
     }
 
+    //Returns user to previous question
     handleLast = () => {
         this.setState({ currentQuestion: this.state.currentQuestion - 1, selected: 0 })
     }
-
+    
+    //Moves user to next question
     handleNext(category) {
-
         if (category === "energy") {
             this.setState({
                 target_energy: this.state.selected * 0.2
             })
-            console.log(this.state.target_energy)
         } else if (category === "dance") {
             this.setState({
                 target_danceability: this.state.selected * 0.2
             })
-            console.log(this.state.target_danceability)
         } else if (category === "mood") {
             this.setState({
                 target_valence: this.state.selected * 0.2
             })
-            console.log(this.state.target_valence)
         } else if (category === "trendy") {
             this.setState({
                 target_popularity: this.state.selected * 17
             })
-            console.log(this.state.target_popularity)
         }
-        if (this.state.selected != 0) {
+        if (this.state.selected !== 0) {
             this.setState({ currentQuestion: this.state.currentQuestion + 1, selected: 0 })
         }
-
     }
 
+    //Requests server to create playlist with parameters provided by the user
     createPlaylist = async () => {
-        console.log("hey matenme");
-
-        console.log("E " + this.state.target_energy);
-        console.log("D " + this.state.target_danceability);
-        console.log("P " + this.state.target_popularity);
-        console.log("M " + this.state.target_valence);
-
         this.setState({
             playlistRequested: true
         })
-
 
         await fetch(process.env.REACT_APP_ENDPOINT + "/createplaylist?" +
             queryString.stringify({
@@ -134,9 +129,8 @@ class Create extends React.Component<Props, State> {
                 playlist_name: this.state.playlistName
             })
         ).then((res) => {
-            // console.log(res)
             res.json().then((result) => {
-                console.log(result);
+                //console.log(result);
                 this.setState({
                     createdId: result.id
                 })
@@ -145,8 +139,9 @@ class Create extends React.Component<Props, State> {
     }
 
     render() {
-        let renderQuestions = questions.map((item, i) => {
 
+        //Returns questions to request a user's playlist preferences 
+        let renderQuestions = questions.map((item, i) => {
             var lowVal = item.lowValue;
             var highVal = item.highValue;
             let scale = [1, 2, 3, 4, 5].map((number, j) => {
@@ -164,7 +159,6 @@ class Create extends React.Component<Props, State> {
                                     </span>
                                 </div>
                                 :
-
                                 <span className="unselected" onClick={() => {
                                     this.setState({ selected: j + 1 })
                                 }}>
@@ -204,7 +198,7 @@ class Create extends React.Component<Props, State> {
                                     </ScrollAnimation>
                                 </span>
                                 <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
-                                    <img src={item.graphic} className="question-graphic"></img>
+                                    <img src={item.graphic} className="question-graphic" alt="art-graphic"></img>
                                 </ScrollAnimation>
 
                                 <div className="question-section">
@@ -224,7 +218,7 @@ class Create extends React.Component<Props, State> {
 
                                 </div>
                                 <div className="bottom-nav">
-                                    {i != 0 ? <button className="back" onClick={this.handleLast}>
+                                    {i !== 0 ? <button className="back" onClick={this.handleLast}>
                                         <Icon type="left-circle" style={{ color: item.secondaryColor }} />
                                     </button> : <div></div>}
                                     <button className="next" onClick={() => { this.handleNext(item.category) }}>
@@ -253,7 +247,7 @@ class Create extends React.Component<Props, State> {
                         </div>
                         <div className="final-section">
                             <ScrollAnimation animateIn="fadeInLeft" animateOut="fadeOutLeft">
-                                <img src={vr} className="question-graphic"></img>
+                                <img src={vr} className="question-graphic" alt="vr-graphic"></img>
                             </ScrollAnimation>
                             <div className="input-section">
                                 <ScrollAnimation animateIn="fadeInUp" >

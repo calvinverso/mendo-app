@@ -23,10 +23,8 @@ class Landing extends React.Component<Props, State> {
   state: State = {
 
   };
-  componentDidMount() {
-    // this.getInfo();
-    //console.log(this.state.userData)
-  }
+
+  //Redirects to login endpoint in the server
   handleLogin() {
     console.log(process.env.REACT_APP_ENDPOINT)
     window.location.href = process.env.REACT_APP_ENDPOINT + "/login";

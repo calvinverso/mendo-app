@@ -1,17 +1,14 @@
 import React from 'react';
 import './Landing.scss';
 import SpotifyWebAPI from 'spotify-web-api-js';
-import queryString from 'query-string';
-import ScrollAnimation from 'react-animate-on-scroll';
+//import queryString from 'query-string';
+//import ScrollAnimation from 'react-animate-on-scroll';
 import { Link } from "react-router-dom";
 
 import './Home.scss';
 
-
 import mendo_dark from '../images/mendo-dark.svg';
 import vr from '../images/vr.png'
-
-
 
 const SpotifyAPI = new SpotifyWebAPI();
 
@@ -19,11 +16,18 @@ interface Props {
     access_token: string
 }
 
+/**
+ * topTracks: Array to push a user's top tracks from Spotify API
+ * topArtists: Array to push a user's top artists from Spotify API
+ * tracksTimeRange: Indicates time range for obtaining a user's top tracks (short_term, medium_term, long_term)
+ * artistsTimeRange: Indicates time range obtaining a user's top artists
+ * playHistory: Array to push a user's recently played tracks from Spotify API
+ */
 interface State {
     topTracks: [{ name: string, artist: string, image: string }],
-    topArtists: [{ name: string, genres: [], image: string }]
-    tracksTimeRange: string,
-    artistsTimeRange: string,
+    topArtists: [{ name: string, genres: [], image: string }],
+    tracksTimeRange: string,  
+    artistsTimeRange: string, 
     playHistory: [{ name: string, artist: string, uri: string, played_at: string }]
 };
 
@@ -33,34 +37,24 @@ class Home extends React.Component<Props, State> {
     state: State = {
         topTracks: [{ name: '', artist: '', image: '' }],
         topArtists: [{ name: '', genres: [], image: '' }],
-        tracksTimeRange: 'short_term',
+        tracksTimeRange: 'short_term',  //short_term represents last 30 days
         artistsTimeRange: 'short_term',
         playHistory: [{ name: '', artist: '', uri: '', played_at: '' }],
     };
     componentDidMount() {
-        console.log("HOME SAYS: " + this.props.access_token)
         SpotifyAPI.setAccessToken(this.props.access_token);
         this.getTopTracks();
         this.getTopArtists();
         this.getPlayHistory();
 
     }
+    //Obtains a user's 15 most recently played tracks
     async getPlayHistory() {
-
-        /*
-        await fetch(process.env.REACT_APP_ENDPOINT + "/playhistory?access_token" + this.props.access_token).then((res) => {
-            console.log(res)
-            res.json().then((result) => { this.setState({ playHistory: result.tracks }) })
-        })
-        */
-
         SpotifyAPI.getMyRecentlyPlayedTracks({ limit: 15 }).then((response: any) => {
-            console.log("YOUR PLAY HISTORY")
             var tracks: [{ name: string, artist: string, uri: string, played_at: string }]
                 = [{ name: '', artist: '', uri: '', played_at: '' }];
             var track;
-            response.items.map((item) => {
-
+            response.items.forEach((item) => {
                 track = {
                     name: item.track.name,
                     artist: item.track.artists[0].name,
@@ -70,17 +64,14 @@ class Home extends React.Component<Props, State> {
                 tracks.push(track);
             })
             this.setState({ playHistory: tracks })
-
         })
     }
+    //Obtains a user's top tracks from past 30 days
     getTopTracks() {
         SpotifyAPI.getMyTopTracks({ limit: 5, time_range: this.state.tracksTimeRange }).then((response: any) => {
-            // console.log("your top tracks")
-            //console.log(response);
             var topTracks: [{ name: string, artist: string, image: string }] = [{ name: '', artist: '', image: '' }]
             var track;
-            response.items.map((item) => {
-                //console.log(item.name)
+            response.items.forEach((item) => {
                 track = {
                     name: item.name,
                     artist: item.artists[0].name,
@@ -88,28 +79,18 @@ class Home extends React.Component<Props, State> {
                 }
                 topTracks.push(track);
             })
-            // console.log(topTracks)
             this.setState({ topTracks: topTracks })
         })
     }
-
+    //Obtains a user's top artists from past 30 days
     getTopArtists() {
         SpotifyAPI.getMyTopArtists({ limit: 5, time_range: this.state.tracksTimeRange }).then((response: any) => {
-            //console.log("your top artists")
             var topArtists: [{ name: string, genres: [], image: string }] = [{ name: '', genres: [], image: '' }]
             var artist;
-
-            // console.log(response)
-
-
-            response.items.map((item) => {
+            response.items.forEach((item) => {
                 var main_genres = [];
-                // console.log(item.name)
-                item.genres.map((genre, i) => {
-                    if (i < 2) {
-                        //console.log("GENRE: " + genre)
-                        main_genres.push(genre);
-                    }
+                item.genres.filter((genre, i) => i < 2).forEach((genre) => {
+                    main_genres.push(genre);
                 })
                 artist = {
                     name: item.name,
@@ -118,65 +99,46 @@ class Home extends React.Component<Props, State> {
                 }
                 topArtists.push(artist);
             })
-            //console.log(topArtists)
-
             this.setState({ topArtists: topArtists })
-
         })
     }
-    /*
-     updateTimeRange() {
-        await this.setState({
-            tracksTimeRange: 'medium_term'
-        });
-        this.getTopTracks()
-    }
-*/
+
     render() {
-        let topTracks = this.state.topTracks.map((item, i) => {
-            if (i > 0) {
-                return (
-                    <div className="music-info" style={i === 1 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
-                        <div className="position outline">{i}</div>
-                        <div>
-                            <h2>{item.name}</h2>
-                            <h4>{item.artist}</h4>
-                        </div>
-                    </div>
-                )
-            }
-
-        })
-
-        let topArtists = this.state.topArtists.map((item, i) => {
-            let genres = item.genres.map((genre, j) => {
-                if (j < 1) {
-                    return (
-
-                        <h4>{genre}</h4>
-                    )
-                }
-            })
-
-            if (i > 0) {
-                return (
-                    <div className="music-info" style={i === 1 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
-                        <div className="position outline">{i}</div>
-                        <div>
-                            <h2>{item.name}</h2>
-                            {genres}
-                        </div>
-                    </div>
-                )
-            }
-
-        })
-
-        let playHistory = this.state.playHistory.map((item, i) => {
+        //Renders a user's top 5 tracks 
+        let topTracks = this.state.topTracks.filter((track, i) => i > 0).map((track, i) => {
             return (
-                <div style={{ fontSize: '0.8em' }}>
-                    <h2>{item.name}</h2>
-                    <h4>{item.artist}</h4>
+                <div className="music-info" style={i === 0 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
+                    <div className="position outline">{i + 1}</div>
+                    <div>
+                        <h2>{track.name}</h2>
+                        <h4>{track.artist}</h4>
+                    </div>
+                </div>
+            )
+        })
+        //Renders a user's top 5 artists 
+        let topArtists = this.state.topArtists.filter((artist, i) => i > 0).map((artist, i) => {
+            let genres = artist.genres.filter((genre, j) => j < 1).map((genre) => {
+                return (
+                    <h4>{genre}</h4>
+                )
+            });
+            return (
+                <div className="music-info" style={i === 0 ? { fontSize: 'inherit' } : { fontSize: 'inherited' }}>
+                    <div className="position outline">{i + 1}</div>
+                    <div>
+                        <h2>{artist.name}</h2>
+                        {genres}
+                    </div>
+                </div>
+            )
+        })
+        //Renders a user's 15 most recently played tracks
+        let playHistory = this.state.playHistory.map((track,i) => {
+            return (
+                <div style={{ fontSize: '0.8em' }} key={track.uri + i}>
+                    <h2>{track.name}</h2>
+                    <h4>{track.artist}</h4>
                 </div>
             )
         })
@@ -196,7 +158,7 @@ class Home extends React.Component<Props, State> {
                             </Link>
                         </div>
 
-                        <img src={vr} className="play"></img>
+                        <img src={vr} className="play" alt="vr-graphic"></img>
                     </div>
                     <div className="top-tracks">
                         <h1>Your Top Tracks</h1>
