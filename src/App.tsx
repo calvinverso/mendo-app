@@ -77,7 +77,7 @@ class App extends React.Component<Props, State> {
               <Create />
             </Route>
             <Route path="/">
-              {/** If user data exists, render Home Page*/}
+              {/** If user data exists, render Home Page if not Landing Page*/}
               {this.state.userData ? <Home access_token={this.state.access_token} /> : <Landing />}
             </Route>
           </Switch>
